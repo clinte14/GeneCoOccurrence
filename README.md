@@ -1,6 +1,6 @@
 # Correlogy v0.1a
 Gene Co-Occurrence Across Phylogeny
-
+See developer doc: https://docs.google.com/document/d/1jad90RfWmCfFbAY6HheRkbyQ1qc92bQbZlQKdDB_9KE/edit?usp=sharing
 ### How to run
 ##### Choose BASH or IDE (eg Spyder)
 1. **BASH**: Must set 'use_IDE' variable to 'False' in main.py
