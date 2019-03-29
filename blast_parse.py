@@ -1,30 +1,39 @@
-import time, re
+import time, re, os
 from Bio.Blast import NCBIWWW, NCBIXML
 import pandas as pd
     
-# performs online NCBIWWW.qblast if 'skipBLAST' flag is set to False (default). Output is XML formatted BLAST 
+# performs online NCBIWWW.qblast if 'skipblast' flag is set to False (default). Output is XML formatted BLAST 
 # results (one per search query/line in input file) in 01_BLAST_results folder.  
 def query_BLAST(flag_values):
     file = open(flag_values['input'], 'r').read().split('\n') #rU, was r
+    print("-----BLASTing using evalue: '{}' and entrez query '{}'".format(flag_values['evalue'], flag_values['entrez']))
     for i in file:
-        print("Currently BLASTing {}...".format(i))
+        print("-----Currently BLASTing {}...".format(i))
         result_handle = NCBIWWW.qblast("blastp", "refseq_protein", i, expect=flag_values['evalue'], entrez_query = flag_values['entrez'])
         time.sleep(3)
-    
-    out_handle = open(flag_values['output'] + "/" + "01_BLAST_results" + "/" + i + "_BLAST_results.xml", "w")
-    print(i)
-    out_handle.write(result_handle.read())
+        
+        out_handle = open(flag_values['output'] + "/" + "01_BLAST_results" + "/" + i + "_BLAST_results.xml", "w")
+        print('->Finished {}'.format(i))
+        out_handle.write(result_handle.read())
     result_handle.close()  
 
 # parse XML files located in 01_BLAST_results folder. Discard MULTISPECIES hits. Strip remaining BLAST hits to  
 # only include specices name [hit_id] and add to hits dictionary, query gene is key and associated value is list   
 # of strings formatted as species name [hit_id]
 def parse_BLAST(flag_values):
-    hits={}
-    file = open(flag_values['input'], 'r').read().split('\n')
+    hits = {}
+    file = []
+    all_files = os.listdir(flag_values['output'] + "/" + "01_BLAST_results" + "/")
+    
+    # take list of files from input directory ('all_files') and place only files ending with ".xml" in 'file' variable
+    for index, value in enumerate(all_files):
+        if all_files[index][-4:] == ".xml":
+            file.append(all_files[index])
+
+    
     for i in file:
         print("-----Parsing XML BLAST output {}...".format(i))
-        xml_handle = open (flag_values['output'] + "/" + "01_BLAST_results" + "/" + i + "_BLAST_results.xml", "r")
+        xml_handle = open(flag_values['output'] + "/" + "01_BLAST_results" + "/" + i, "r")
         xml_record = NCBIXML.read(xml_handle)
 #        hits[i] = ["test", "some", "strings"]
         hits[i] = []

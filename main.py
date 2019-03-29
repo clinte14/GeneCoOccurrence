@@ -2,8 +2,9 @@ from housekeeping import create_folders, parse_input, save_flags
 from blast_parse import query_BLAST, parse_BLAST, create_pa
 
 def main():
-    # Spyder/IDE: set use_IDE to True
-    # BASH: set use_IDE to False
+    # Spyder/IDE mode: set use_IDE to True
+    # BASH mode: set use_IDE to False
+    # Delete _pycache_ folder (or reset kernel in IDE) before changing modes or things will get real weird, real quick
     use_IDE = False
     
     # obtain flag values. For BASH, parse input. For Spyder/IDE, use a pre-defined dictionary.
@@ -15,9 +16,9 @@ def main():
     # save/record flags options and paramaters to "command.txt" file in 00_settings folder
     save_flags(flag_values)
     
-    # performs online NCBIWWW.qblast if 'skipBLAST' flag is set to False (default). Output is XML formatted BLAST 
+    # performs online NCBIWWW.qblast if 'skipblast' flag is set to False (default). Output is XML formatted BLAST 
     # results (one per search query/line in input file) in 01_BLAST_results folder.  
-    if flag_values['skipBLAST'] is False:
+    if flag_values['skipblast'] is False:
         query_BLAST(flag_values)
     else:
         print('-----Skipping BLAST search...\n-> Skipped\n')

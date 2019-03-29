@@ -21,7 +21,7 @@ def parse_input(use_IDE):
     
     # use flag values pre-defined in dictionary, allows program to run in Spyder/IDE 
     if use_IDE is True:
-        arg_dict= {'input':"test.txt", 'output':dir_path, 'evalue':"0.0001", 'entrez':'(txid2 [ORGN]) NOT (txid666 [ORGN])', 'skipBLAST':True}    
+        arg_dict= {'input':"input.txt", 'output':dir_path, 'evalue':"0.0001", 'entrez':'(txid2 [ORGN]) NOT (txid666 [ORGN])', 'skipblast':True}    
     
     # capture flag options from command line for BASH usage    
     elif use_IDE is False:
@@ -30,7 +30,7 @@ def parse_input(use_IDE):
         parser.add_argument("-i", "--input", required=True, help="List of genes of interest (one gene per line, UTF-8 encoded, Unix LF Newlines). REQUIRED.")
         parser.add_argument("-o", "--output", default=dir_path, help="Desired directory of output file. Default=Current Directory.")
         parser.add_argument("--evalue", default = 0.0001, help="Desired E-Value Cutoff for BLAST Search of Homologous Genes. Default=0.0001.")
-        parser.add_argument("--entrez", default = 0.0001, help="ENTRTEZ filtering string. Default=empty string.")
+        parser.add_argument("--entrez", default = '', help="ENTRTEZ filtering string. Default=empty string.")
     #    parser.add_argument("-e", "--exlude", help="File with tax ID to EXCLUDE from BLAST search (one ID per line, UTF-8 encoded")
     #    parser.add_argument("-l", "--local", default="false", help="Local or Online NCBI BLAST search?")
         parser.add_argument("-s", "--skipblast", default = False, help="Do Not BLAST: Bring Your Own Blast Files (BYOB). Default=False.")
