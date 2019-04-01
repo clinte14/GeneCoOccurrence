@@ -2,7 +2,7 @@ import time, re, os
 from Bio.Blast import NCBIWWW, NCBIXML
 import pandas as pd
     
-# performs online NCBIWWW.qblast if 'skipblast' flag is set to False (default). Output is XML formatted BLAST 
+# performs online NCBIWWW. qblast if 'skipblast' flag is set to False (default). Output is XML formatted BLAST 
 # results (one per search query/line in input file) in 01_BLAST_results folder.  
 def query_BLAST(flag_values):
     file = open(flag_values['input'], 'r').read().split('\n') #rU, was r

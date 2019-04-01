@@ -4,7 +4,7 @@ from blast_parse import query_BLAST, parse_BLAST, create_pa
 def main():
     # Spyder/IDE mode: set use_IDE to True
     # BASH mode: set use_IDE to False
-    # Delete _pycache_ folder (or reset kernel in IDE) before changing modes or things will get real weird, real quick
+    # Delete _pycache_ folder (or reset kernel in IDE) before changing modes or things will get real weird, real quick 
     use_IDE = False
     
     # obtain flag values. For BASH, parse input. For Spyder/IDE, use a pre-defined dictionary.

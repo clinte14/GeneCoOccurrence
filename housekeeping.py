@@ -32,7 +32,7 @@ def parse_input(use_IDE):
         parser.add_argument("--evalue", default = 0.0001, help="Desired E-Value Cutoff for BLAST Search of Homologous Genes. Default=0.0001.")
         parser.add_argument("--entrez", default = '', help="ENTRTEZ filtering string. Default=empty string.")
     #    parser.add_argument("-e", "--exlude", help="File with tax ID to EXCLUDE from BLAST search (one ID per line, UTF-8 encoded")
-    #    parser.add_argument("-l", "--local", default="false", help="Local or Online NCBI BLAST search?")
+    #    parser.add_argument ("-l", "--local", default="false", help="Local or Online NCBI BLAST search?")
         parser.add_argument("-s", "--skipblast", default = False, help="Do Not BLAST: Bring Your Own Blast Files (BYOB). Default=False.")
     
         args = parser.parse_args()
