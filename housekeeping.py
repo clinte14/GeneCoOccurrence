@@ -2,17 +2,17 @@ import os.path, sys
 import argparse, datetime, json
 
 def create_folders(dir_path):
-    folders = ['00_settings','01_BLAST_results', '02_PA_matrix']
+    folders = ['00_Settings','01_BLAST_results', '02_PA_matrix', '03_Correlation_calcs', '04_Correlog_values']
     for i in folders:
         
         if not os.path.exists(dir_path + "/" + i):
             os.mkdir(dir_path + "/" + i)
-            print("-----Checking directory '{}'... ".format(dir_path + "/" + i))
-            print('->Directory Created')
+            print("Checking directory '{}'... ".format(dir_path + "/" + i))
+            print('  --->Directory Created')
             
         else:
-            print("-----Checking directory '{}'... ".format(dir_path + "/" + i))
-            print('->Directory Already Exists')
+            print("Checking directory '{}'... ".format(dir_path + "/" + i))
+            print('  --->Directory Already Exists')
     print('')
     
 # obtain flag values. For BASH, parse input. For Spyder/IDE, use a pre-defined dictionary.    
@@ -32,7 +32,7 @@ def parse_input(use_IDE):
         parser.add_argument("--evalue", default = 0.0001, help="Desired E-Value Cutoff for BLAST Search of Homologous Genes. Default=0.0001.")
         parser.add_argument("--entrez", default = '', help="ENTRTEZ filtering string. Default=empty string.")
     #    parser.add_argument("-e", "--exlude", help="File with tax ID to EXCLUDE from BLAST search (one ID per line, UTF-8 encoded")
-    #    parser.add_argument ("-l", "--local", default="false", help="Local or Online NCBI BLAST search?")
+    #    parser.add_argument("-l", "--local", default="false", help="Local or Online NCBI BLAST search?")
         parser.add_argument("-s", "--skipblast", default = False, help="Do Not BLAST: Bring Your Own Blast Files (BYOB). Default=False.")
     
         args = parser.parse_args()
@@ -41,15 +41,17 @@ def parse_input(use_IDE):
     
     # throw error & quit if use_IDE != True or False
     else:
-        print("'use_IDE value' must be set to True or False; quitting now")
+        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        print(" 'use_IDE value' must be set to True or False; quitting now")
+        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
         sys.exit(0)
 
     return arg_dict
 
-# save flags options and paramaters to "command.txt" file in 00_settings folder
+# save flags options and paramaters to "command.txt" file in 00_Settings folder
 def save_flags(flags):
-    with open(flags['output'] + "/" + "00_settings" + "/"'command.txt', 'w') as file:
+    with open(flags['output'] + "/" + "00_Settings" + "/"'command.txt', 'w') as file:
         currentDT = datetime.datetime.now()
         file.write("Executed the following in " + flags['output'] + " at " + str(currentDT) + ":\n" + json.dumps(flags))
-    print("-----Writing flags to 'command.txt' in '{}'... ".format(flags['output'] + "/" + "00_settings"))
-    print("->Flags written\n")
+    print("Writing flags to 'command.txt' in '{}'... ".format(flags['output'] + "/" + "00_settings"))
+    print("  --->Flags written\n")
