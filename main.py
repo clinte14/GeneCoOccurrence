@@ -12,7 +12,7 @@ def main():
     # Spyder/IDE mode: set use_IDE to True
     # BASH mode: set use_IDE to False
     # Delete _pycache_ folder (or reset kernel in IDE) before changing modes or things will get real weird, real quick
-    use_IDE = True
+    use_IDE = False
     
     # obtain flag values. For BASH, parse input. For Spyder/IDE, use a pre-defined dictionary.
     flag_values = parse_input(use_IDE)
@@ -20,8 +20,8 @@ def main():
     # create folders for project in path defined by -o "/some/place" flag. Default is the directory program ran from.
     create_folders(flag_values['output'])
     
-    # save/record flags options and paramaters to "command.txt" file in 00_settings folder
     save_flags(flag_values)
+    # save/record flags options and paramaters to "command.txt" file in 00_settings folder
     
     # performs online NCBIWWW.qblast if 'skipblast' flag is set to False (default). Output is XML formatted BLAST 
     # results (one per search query/line in input file) in 01_BLAST_results folder.  
