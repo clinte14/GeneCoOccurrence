@@ -2,6 +2,7 @@ import numpy as np
 #import matplotlib.pyplot as plt
 import pandas as pd
 import math as math
+import csv
  
 def correlation_calcs(flag_values):
     #open prescence/abscence matrix from /02_PA_matrix/ directory 
@@ -14,6 +15,8 @@ def correlation_calcs(flag_values):
     
     #an index of gene_names. Do not include indexer row '0' or 'species' column '1' of pa_df (prescence/abscence dataframe)
     gene_names =  pa_df.dtypes.index[1:]
+    
+#    gene_names.sort_index(axis=0, level=None, ascending=True, inplace=True)
 
     #this function calculates all the terms needed for pearson correlation
     #FUNCTION: calc_pearson_terms(pa_df, gene_names), returns E_i (dict gene:# species containing gene) N is total # of species
@@ -53,14 +56,49 @@ def correlation_calcs(flag_values):
     # Convert Wij_df from a triangle matrix into a symmetrical matrix
     for column in gene_names:
         for row in gene_names:
-            # Create main diagonal of 0's
+            # Create main diagonal of NaN
             if column == row:
-                Wij_df.loc[column, row]=0
+                Wij_df.loc[column, row]=np.nan
             # Transpose rows/columns with columns/rows to fill in bottom triangles
             else:
                 Wij_df.loc[row, column] = Wij_df.loc[column, row]
+#    for c in df.columns:
+#    df[c] = pd.to_numeric(df[c], errors='coerce')
+#    Wij_df[:,:] = pd.to_numeric(Wij_df[:,:], errors='coerce')
     Wij_df.to_csv(flag_values['output'] + '/03_Correlation_calcs/' + 'Wij_df.csv')
-    print("->Wrote 'Wij_df.csv' to '{}".format(flag_values['output']) + "/04_Correlog_values/..." + '\n') 
+
+#    Wij_df_sorted = pd.DataFrame()
+    Wij_outerDict = {}
+    
+    f = open(flag_values['output'] + '/04_Correlog_values/'+ "Wij_matrix.csv", "w")
+    writer = csv.writer(f)
+#    Wij_df.insert(0,"")
+    for row in gene_names:
+        #sort columns by a given row highest to lowest
+        Wij_df = Wij_df.sort_values(by=row, ascending=False, axis=1, na_position='last')
+#        temp = Wij_df.columns.tolist()
+#        header_text = row + "----> " 
+#        writer.writerow([header_text])
+        current_columns = Wij_df.columns.tolist()
+        current_columns.remove(row)
+        current_columns.insert(0,"---->")
+        current_columns.insert(0,row)
+        writer.writerow(current_columns)
+        
+        current_row = Wij_df.loc[row,:].tolist()
+        current_row.insert(0,"")
+        current_row.insert(0,"")
+        current_row.remove(np.nan)
+        writer.writerow(current_row)
+        Wij_outerDict[row] = dict(zip(Wij_df.columns, Wij_df.loc[row,:]))
+    f.close()
+    print("STOP")
+
+#    f = open("sample.csv", "w")
+#    writer = csv.DictWriter(f, fieldnames=outerDict['VC0175.xml'].keys())
+#    writer.writerows(outerDict['VC0175.xml'].values())
+#    f.close()
+
 
 ########################################################################################################################
 #this function calculates all the terms needed for pearson correlation
@@ -68,7 +106,7 @@ def correlation_calcs(flag_values):
 #Cij_df contains number of species containing both genes i and j
 def calc_pearson_terms(flag_values, pa_df, gene_names):
  
-    
+
     # E_i is dictionary(gene:number species containing gene)
     E_i = {}
     for i in gene_names: #do not include indexer row '0' or 'species' column '1'
