@@ -66,6 +66,7 @@ def create_pa(hits, flag_values):
     print('Merging BLAST XML files...')
     # create 'merged_BLAST.csv' file in /02_PA_Matrix/ containing all values in 'hits' dictionary from parse_merge_BLAST()
     merged_df = pd.DataFrame({ key:pd.Series(value) for key, value in hits.items() })
+    merged_df = merged_df.reindex(sorted(merged_df.columns), axis=1)
     merged_df.to_csv(flag_values['output'] + '/02_PA_matrix/' + 'merged_BLAST.csv')
     
     print("  --->Wrote 'merged_BLAST.csv' to '{}".format(flag_values['output']) + "/02_PA_matrix/'..." + '\n') 
