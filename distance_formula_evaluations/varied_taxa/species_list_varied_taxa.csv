@@ -1,0 +1,98 @@
+k_species_id,k_species_name
+nme,Neisseria meningitidis MC58
+ngo,Neisseria gonorrhoeae FA
+bma,Burkholderia mallei ATCC 23344
+bps,Burkholderia pseudomallei K96243
+bpe,Bordetella pertussis Tohama I 
+hpy,Helicobacter pylori 26695
+cje,Campylobacter jejuni subsp. jejuni NCTC 11168 = ATCC 700819
+rri,Rickettsia rickettsii Sheila Smith
+sau,Staphylococcus aureus subsp. aureus N315 (MRSA/VSSA)
+lmo,Listeria monocytogenes EGD-e (serotype 1/2a)
+cbo,Clostridium botulinum A ATCC 3502
+spy,Streptococcus pyogenes M1 GAS (serotype M1)
+mge,Mycoplasma genitalium G37
+mtu,Mycobacterium tuberculosis H37Rv
+mab,Mycobacteroides abscessus ATCC 19977
+bln,Bifidobacterium longum subsp. infantis ATCC 15697 (JGI)
+ctr,Chlamydia trachomatis D/UW-3/CXbbu  Borreliella burgdorferi B31
+bbu,Borreliella burgdorferi B31
+tpa,Treponema pallidum subsp. pallidum Nichols
+lil,Leptospira interrogans serovar Lai 56601
+fnu,Fusobacterium nucleatum subsp. nucleatum ATCC 25586
+salv,Snodgrassella alvi
+rso,Ralstonia solanacearum GMI1000
+reh,Cupriavidus necator H16
+aav,Acidovorax citrulli
+mlo,Mesorhizobium japonicum
+ata,Agrobacterium tumefaciens S33
+rle,Rhizobium leguminosarum bv. viciae 3841
+baa,Brucella abortus A13334
+ocg,Oligotropha carboxidovorans OM5 (Goettingen)
+dvu,Desulfovibrio vulgaris Hildenborough
+ade,Anaeromyxobacter dehalogenans 2CP-C
+bba,Bdellovibrio bacteriovorus HD100
+mxa,Myxococcus xanthus
+bmx,Halobacteriovorax marinus
+hmr,Hippea maritima
+afe,Acidithiobacillus ferrooxidans ATCC 53993
+maes,Mariprofundus aestuarium
+htl,Hydrogenophilus thermoluteolus
+bsu,Bacillus subtilis subsp. subtilis 168
+pjd,Paenibacillus sp. JDR-2
+lla,Lactococcus lactis subsp. lactis Il1403
+lpl,Lactobacillus plantarum WCFS1
+efm,Enterococcus faecium ATCC 8459 = NRRL B-2354
+tex,Thermoanaerobacter sp. X514
+med,Megasphaera elsdenii
+smir,Spiroplasma mirum ATCC 29335
+cgl,Corynebacterium glutamicum ATCC 13032 (Kyowa Hakko)
+nfa,Nocardia farcinica IFM 10152
+gbr,Gordonia bronchialis
+salu,Streptomyces albulus NK660
+art,Arthrobacter sp. FB24
+mau,Micromonospora aurantiaca
+syn,Synechocystis sp. PCC 6803
+syw,Synechococcus sp. WH8102
+pma,Prochlorococcus marinus subsp. marinus CCMP1375
+mpro,Moorea producens
+det,Dehalococcoides mccartyi 195
+ney,Neochlamydia sp. S13
+caa,Coraliomargarita akajimensis
+min,Methylacidiphilum infernorum
+rba,Rhodopirellula baltica
+psl,Pirellula staleyi
+pbp,Sedimentisphaera salicampi
+vbc,Victivallales bacterium CCUG 44730
+tsa,Terriglobus saanensis
+acm,Granulicella tundricola
+emi,Elusimicrobium minutum
+tai,Thermanaerovibrio acidaminovorans
+sbr,Fretibacterium fastidiosum
+fsu,Fibrobacter succinogenes
+gau,Gemmatimonas aurantiaca
+gba,Gemmatirosa kalamazoonesis
+bth,Bacteroides thetaiotaomicron VPI-5482
+pgi,Porphyromonas gingivalis W83
+pru,Prevotella ruminicola
+cte,Chlorobaculum tepidum
+ial,Ignavibacterium album
+hya,Hydrogenobaculum sp. Y04AAS1
+sul,Sulfurihydrogenibium sp. YO3AOP1
+tma,Thermotoga maritima MSB8
+fno,Fervidobacterium nodosum
+dtn,Defluviitoga tunisiensis
+cex,Caldisericum exile
+din,Desulfurispirillum indicum
+ddf,Deferribacter desulfuricans
+fsi,Flexistipes sinusarabici
+caby,Caldithrix abyssi
+dth,Dictyoglomus thermophilum
+dtu,Dictyoglomus turgidum
+tye,Thermodesulfovibrio yellowstonii
+lfc,Leptospirillum ferrooxidans
+tid,Thermodesulfatator indicus
+top,Thermodesulfobacterium geofontis
+saal,Candidatus Saccharimonas aalborgensis
+prf,Candidatus Peribacter riflensis
+bana,Candidatus Bipolaricaulis anaerobius
