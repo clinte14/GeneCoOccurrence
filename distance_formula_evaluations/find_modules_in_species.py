@@ -27,9 +27,9 @@ import os.path, sys
 from Bio.KEGG import REST
 from urllib.error import URLError, HTTPError
 
-SPECIES_LIST_FILENAME = "/home/clint/Documents/correlogy/v2/species_list_varied_taxa.csv"
-GENE_MODULES_OUTPUT_FILENAME = "/home/clint/Documents/correlogy/v2/genes_modules_pathogens_df.csv"
-NCBI_GENES_FROM_MODULES = "/home/clint/Documents/correlogy/v2/genes_modules_aaseq_pathogens.csv"
+SPECIES_LIST_FILENAME = "~/correlogy/distance_formula_evaluations/pathogens/species_list_pathogens.csv"
+GENE_MODULES_OUTPUT_FILENAME = "~/correlogy/distance_formula_evaluations/pathogens/genes_modules_pathogens_df.csv"
+NCBI_GENES_FROM_MODULES = "~/correlogy/distance_formula_evaluations/pathogens/genes_modules_aaseq_pathogens.csv"
 
 #Obtain gene modules associated with Kegg species ID
 def find_modules_in_species(df):

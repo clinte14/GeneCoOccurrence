@@ -12,7 +12,7 @@ def main():
     # Spyder/IDE mode: set use_IDE to True
     # BASH mode: set use_IDE to False
     # Delete _pycache_ folder (or reset kernel in IDE) before changing modes or things will get real weird, real quick
-    use_IDE = False
+    use_IDE = True
     
     # obtain flag values. For BASH, parse input. For Spyder/IDE, use a pre-defined dictionary.
     flag_values = parse_input(use_IDE)
