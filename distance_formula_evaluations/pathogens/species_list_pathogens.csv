@@ -1,22 +1,22 @@
-k_species_id,k_species_name
-nme,Neisseria meningitidis MC58
-ngo,Neisseria gonorrhoeae FA
-bma,Burkholderia mallei ATCC 23344
-bps,Burkholderia pseudomallei K96243
-bpe,Bordetella pertussis Tohama I 
-hpy,Helicobacter pylori 26695
-cje,Campylobacter jejuni subsp. jejuni NCTC 11168 = ATCC70
-rri,Rickettsia rickettsii Sheila Smith
-sau,Staphylococcus aureus subsp. aureus N315 (MRSA/VSSA)
-lmo,Listeria monocytogenes EGD-e (serotype 1/2a)
-cbo,Clostridium botulinum A ATCC 3502
-spy,Streptococcus pyogenes M1 GAS (serotype M1)
-mge,Mycoplasma genitalium G37
-mtu,Mycobacterium tuberculosis H37Rv
-mab,Mycobacteroides abscessus ATCC 19977
-bln,Bifidobacterium longum subsp. infantis ATCC 15697 (JGI
-ctr,Chlamydia trachomatis D/UW-3/CXbbu 
-bbu,Borreliella burgdorferi B31
-tpa,Treponema pallidum subsp. pallidum Nichols
-lil,Leptospira interrogans serovar Lai 56601
-fnu,Fusobacterium nucleatum subsp. nucleatum ATCC 25586
+k_species_id,k_species_name,ncbi_tax_id
+nme,Neisseria meningitidis MC58,487
+ngo,Neisseria gonorrhoeae FA,485
+bma,Burkholderia mallei ATCC 23344,13373
+bps,Burkholderia pseudomallei K96243,28450
+bpe,Bordetella pertussis Tohama I ,520
+hpy,Helicobacter pylori 26695,210
+cje,Campylobacter jejuni subsp. jejuni NCTC 11168 = ATCC70,197
+rri,Rickettsia rickettsii Sheila Smith,783
+sau,Staphylococcus aureus subsp. aureus N315 (MRSA/VSSA),1280
+lmo,Listeria monocytogenes EGD-e (serotype 1/2a),1639
+cbo,Clostridium botulinum A ATCC 3502,1491
+spy,Streptococcus pyogenes M1 GAS (serotype M1),1314
+mge,Mycoplasma genitalium G37,2097
+mtu,Mycobacterium tuberculosis H37Rv,1773
+mab,Mycobacteroides abscessus ATCC 19977,36809
+bln,Bifidobacterium longum subsp. infantis ATCC 15697 (JGI,216816
+ctr,Chlamydia trachomatis D/UW-3/CXbbu ,813
+bbu,Borreliella burgdorferi B31,139
+tpa,Treponema pallidum subsp. pallidum Nichols,160
+lil,Leptospira interrogans serovar Lai 56601,173
+fnu,Fusobacterium nucleatum subsp. nucleatum ATCC 25586,851

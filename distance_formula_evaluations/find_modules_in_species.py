@@ -7,15 +7,18 @@ File Description:
     Obtain gene modules associated with Kegg species ID
     
 Input: 
-    .csv file with column for species ID's (header = 'k_species_id') 
-    and species name ('k_species_name')
+    .csv file with column for species ID's (header = 'k_species_id'),
+    species name ('k_species_name') and ('ncbi_tax_id')
+    
+    *note column 'ncbi_tax_id' was added to this input .csv using
+    https://www.kegg.jp/kegg/tool/map_taxonomy.html
     
 Output: 
     .csv of pandas data frame:
             k_id species_name module
     gene1
     gene2
-    
+
 Author: Clinton Elg 
 Contact: elg6752@vandals.uidaho.edu or clintelg@gmail.com
 
@@ -27,52 +30,11 @@ import os.path, sys
 from Bio.KEGG import REST
 from urllib.error import URLError, HTTPError
 
-SPECIES_LIST_FILENAME = "~/correlogy/distance_formula_evaluations/pathogens/species_list_pathogens.csv"
-GENE_MODULES_OUTPUT_FILENAME = "~/correlogy/distance_formula_evaluations/pathogens/genes_modules_pathogens_df.csv"
-NCBI_GENES_FROM_MODULES = "~/correlogy/distance_formula_evaluations/pathogens/genes_modules_aaseq_pathogens.csv"
+SPECIES_LIST_FILENAME = "~/correlogy/distance_formula_evaluations/varied_taxa/species_list_varied_taxa.csv"
+GENE_MODULES_OUTPUT_FILENAME = "~/correlogy/distance_formula_evaluations/varied_taxa/genes_modules_varied_taxa_df.csv"
+NCBI_GENES_FROM_MODULES = "~/correlogy/distance_formula_evaluations/varied_taxa/genes_modules_aaseq_varied_taxa.csv"
 
-#Obtain gene modules associated with Kegg species ID
-def find_modules_in_species(df):
-    #module_dict contains {Kegg bacteria ID:list[Kegg module ID's]}
-    modules_in_species_dict = {}
-    k_id_REST_failures = []
-    all_modules = []
-    counter = 0
-    
-    for k_id in df.k_id:
-        current_module_list = []
-        counter+=1
-        print("{}/{}...Retrieving modules in '{}'".format(counter, len(df.k_id), k_id))
 
-        
-        try:
-            bacteria_modules = REST.kegg_("module", k_id).read()
-        except (URLError, HTTPError, TimeoutError):
-            print("WARNING: URLError, HTTPError, or TimeoutError with species: '{}'".format(k_id))
-            k_id_REST_failures.append(k_id)
-        else:
-            #kegg returns modules as string, so parse line by line and split
-            for line in bacteria_modules.rstrip().split('\n'):
-                module, description = line.split('\t')
-                #module = module.strip('md:') MIGHT NEED THIS LATER?
-                #add modules stripped from kegg to current_module_list[]
-                current_module_list.append(module)
-                all_modules.append(module)
-                
-            #write current_module_list to modules_in_species_dict
-            #module_dict contains {Kegg bacteria ID:list[Kegg module ID's]}    
-            modules_in_species_dict[k_id] = current_module_list
-            
-#    new_df = pd.DataFrame.from_dict(module_dict, orient ="index")
-#    new_df = new_df.transpose()di
-    if len(k_id_REST_failures)==0:
-        print("{}/{} All species had associated modules successfully returned".format((counter-1), len(df.k_id)))
-    else:
-        print("WARNING: {}/{} Species had URLError, HTTPError, or Timeout Error".format(len(k_id_REST_failures),len(df.k_id)))
-        print("The following failed: {}".format(k_id_REST_failures))
-    return all_modules, modules_in_species_dict
-
-#
 def find_genes_in_modules(species_df):
     counter = 0
     REST_failures = []
@@ -80,10 +42,11 @@ def find_genes_in_modules(species_df):
     temp_module_list = []
     temp_k_id = []
     temp_k_species_name = []
+    temp_ncbi_tax_id = []
 
     
     for k_id in species_df.k_species_id:
-        df = pd.DataFrame(columns=['k_gene_id', 'module', 'k_species_id','k_species_name', 'aaseq'])
+        df = pd.DataFrame(columns=['k_gene_id', 'module', 'k_species_id','k_species_name', 'ncbi_tax_id','aaseq'])
         counter+=1
         print("{}/{}...Retrieving modules and associated genes in species '{}'".format(counter, len(species_df.k_species_id), k_id))
         
@@ -102,11 +65,14 @@ def find_genes_in_modules(species_df):
                 temp_module_list.append(module)
                 temp_k_id.append(k_id)
                 temp_k_species_name.append(species_df.loc[species_df['k_species_id']==k_id, 'k_species_name'].iloc[0])
+                temp_ncbi_tax_id.append(species_df.loc[species_df['k_species_id']==k_id, 'ncbi_tax_id'].iloc[0])
             print("\n")
             df['k_gene_id'] = temp_gene_list
             df['module'] = temp_module_list
             df['k_species_id'] = temp_k_id
             df['k_species_name'] = temp_k_species_name
+            df['ncbi_tax_id'] = temp_ncbi_tax_id
+            
     if len(REST_failures)==0:
         print("{}/{} All species had associated modules successfully returned".format((counter), len(species_df.k_species_id)))
     else:
@@ -114,46 +80,11 @@ def find_genes_in_modules(species_df):
         print("***WARNING***: {}/{} Species had URLError, HTTPError, or Timeout Error".format(len(REST_failures),len(species_df.k_species_id)))
         print("The following failed: {}".format(REST_failures))       
 
-            
-#    df.to_csv('find_genes_in_modules_df.csv', encoding='utf-8')
-#    print("DEBUG")
     df.to_csv(GENE_MODULES_OUTPUT_FILENAME,index=False, header=True)
+ 
     return df
             
-            
-            
 
-"""    
-    for k_id in species_df.k_species_id:
-        df = pd.DataFrame(columns=['k_gene_id', 'module'])
-        counter+=1
-        print("{}/{}...Retrieving modules and associated genes in species '{}'".format(counter, len(k_id), k_id), end=',')
-        try:
-            k_gene_module = REST.kegg_link("module", k_id).read()
-        except (URLError, HTTPError, TimeoutError):
-            print("WARNING: URLError, HTTPError, or TimeoutError with species: '{}'".format(k_id))
-            REST_failures.append(module)
-        else:
-            for line in k_gene_module.rstrip().split('\n'):
-                gene, module = line.split('\t')
-                temp_gene_list.append(gene)
-                temp_module_list.append(module)
-        df['k_gene_id'] = temp_gene_list
-        df['module'] = temp_module_list
-        df['k_species_id'] = k_id
-        df['k_species_name'] = species_df.loc[k_id,'k_species_name']
-        df.append(df)
-    
-    if len(module_REST_failures)==0:
-        print("{}/{} All modules had associated genes successfully returned".format((counter-1), len(all_modules)))
-    else:
-        print("WARNING: {}/{} Species had URLError, HTTPError, or Timeout Error".format(len(module_REST_failures),len(all_modules)))
-        print("The following failed: {}".format(module_REST_failures))
-        
-    return genes_in_module_dict
-        
-    print("DEBUG")
-"""
 def convert_k_gene_id_to_aaseq(df,species_df):
     counter = 0
     REST_failures = []
@@ -192,8 +123,7 @@ def convert_k_gene_id_to_aaseq(df,species_df):
 #        print("{}/{} Species had associated modules successfully returned".format(((counter)-len(REST_failures)), len(df.k_gene_id)))
     print("*Note*:{}/{} Kegg ID's had URLError, HTTPError, or Timeout Error".format(len(REST_failures),len(df.k_gene_id)))
     print("The following failed: {}".format(no_ncbi_gene_id_returned))
-#        
-
+    
     return df
     
 def main():
