@@ -92,7 +92,6 @@ def correlation_calcs(flag_values):
         writer.writerow(current_row)
         Wij_outerDict[row] = dict(zip(Wij_df.columns, Wij_df.loc[row,:]))
     f.close()
-    print("STOP")
 
 #    f = open("sample.csv", "w")
 #    writer = csv.DictWriter(f, fieldnames=outerDict['VC0175.xml'].keys())

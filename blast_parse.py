@@ -1,21 +1,21 @@
-import time, re, os, sys
-from Bio.Blast import NCBIWWW, NCBIXML
+import re, os, sys
+from Bio.Blast import NCBIXML
 import pandas as pd
     
 # performs online NCBIWWW.qblast if 'skipblast' flag is set to False (default). Output is XML formatted BLAST 
 # results (one per search query/line in input file) in 01_BLAST_results folder.  
-def query_BLAST(flag_values):
-    file = open(flag_values['input'], 'r').read().split('\n') #rU, was r
-    print("BLASTing using evalue: '{}' and entrez query '{}'".format(flag_values['evalue'], flag_values['entrez']))
-    for i in file:
-        print("Currently BLASTing {}...".format(i))
-        result_handle = NCBIWWW.qblast("blastp", "refseq_protein", i, expect=flag_values['evalue'], entrez_query = flag_values['entrez'])
-        time.sleep(3)
-        
-        out_handle = open(flag_values['output'] + "/" + "01_BLAST_results" + "/" + i + "_BLAST_results.xml", "w")
-        print('  --->Finished {}'.format(i))
-        out_handle.write(result_handle.read())
-    result_handle.close()  
+#def query_BLAST(flag_values):
+#    file = open(flag_values['input'], 'r').read().split('\n') #rU, was r
+#    print("BLASTing using evalue: '{}' and entrez query '{}'".format(flag_values['evalue'], flag_values['entrez']))
+#    for i in file:
+#        print("Currently BLASTing {}...".format(i))
+#        result_handle = NCBIWWW.qblast("blastp", "refseq_protein", i, expect=flag_values['evalue'], entrez_query = flag_values['entrez'])
+#        time.sleep(3)
+#        
+#        out_handle = open(flag_values['output'] + "/" + "01_BLAST_results" + "/" + i + "_BLAST_results.xml", "w")
+#        print('  --->Finished {}'.format(i))
+#        out_handle.write(result_handle.read())
+#    result_handle.close()  
 
 # parse XML files located in 01_BLAST_results folder. Discard MULTISPECIES hits. Strip remaining BLAST hits to  
 # only include specices name [hit_id] and add to hits dictionary, query gene is key and associated value is list   
@@ -23,12 +23,15 @@ def query_BLAST(flag_values):
 def parse_merge_BLAST(flag_values):
     hits = {}
     file = []
-    all_files = os.listdir(flag_values['output'] + "/" + "01_BLAST_results" + "/")
+#    all_files = os.listdir(flag_values['output'])
+#    all_files = flag_values['output']
+    input_dir = flag_values['input']
+    print("Input Dir: " + input_dir)
     
     # take list of files from input directory ('all_files') and place only files ending with ".xml" in 'file' variable
-    for index, value in enumerate(all_files):
-        if all_files[index][-4:] == ".xml":
-            file.append(all_files[index])
+    for index, value in enumerate(os.listdir(input_dir)):
+        if value[-4:] == ".xml":
+            file.append(value)
     
     # throw error and quit if no .xml BLAST input file(s)
     if len(file) == 0:
@@ -38,11 +41,11 @@ def parse_merge_BLAST(flag_values):
         sys.exit(0)
     
     file.sort()
-    
     # loop through .xml files in /01_BLAST_results
     for i in file:
-        print("Parsing XML BLAST output {}...".format(i))
-        xml_handle = open(flag_values['output'] + "/" + "01_BLAST_results" + "/" + i, "r")
+        print("Parsing BLAST file {}...".format(i))
+        print()
+        xml_handle = open(os.path.join(input_dir,i))
         xml_record = NCBIXML.read(xml_handle)
 # debug        hits[i] = ["test", "some", "strings"]
         hits[i] = []
