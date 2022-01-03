@@ -19,7 +19,7 @@ def create_folders(dir_path):
 def parse_input():
     dir_path = os.path.dirname(os.path.realpath('__file__'))  
     
-    parser = argparse.ArgumentParser(description="Correlation of Gene Homologues", prog='correlog')
+    parser = argparse.ArgumentParser(description="Corelogy", prog='correlog')
     
     parser.add_argument("-i", "--input", required=True, help="List of genes of interest (one gene per line, UTF-8 encoded, Unix LF Newlines). REQUIRED.")
     parser.add_argument("-o", "--output", default=dir_path, help="Desired directory of output file. Default=Current Directory.")

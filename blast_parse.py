@@ -47,19 +47,22 @@ def parse_merge_BLAST(flag_values):
         print()
         xml_handle = open(os.path.join(input_dir,i))
         xml_record = NCBIXML.read(xml_handle)
-# debug        hits[i] = ["test", "some", "strings"]
+    # debug        hits[i] = ["test", "some", "strings"]
         hits[i] = []
         
         # loop through single .xml file, remove 'MULTISPECIES' hits. Such hits are always non-species taxonomic levels (eg genus, family, order)
         # parses remaing hits, strips off unwanted data
         # writes these to 'hits' dictionary with gene as key and value is list containing associated hits
         for hit_title in xml_record.alignments:
-# debug            print("hit:",hit_title.title)
-            if "MULTISPECIES" not in hit_title.title:
-                stripped = re.findall('\[(.*?)\]', hit_title.title)
-                hits[i].append(stripped[0])
-#08:08                hits[i].append(stripped[0] + ' ' + hit_title.hit_id)
-        print('  --->Finished Parsing')
+           # print(hit_title.title)
+           # print()
+            stripped = re.findall('\|(.*?)\|', hit_title.title)
+            for items in stripped:
+                # Remove non-redundant protein records
+                if not items.startswith('WP'):
+                    print(items)
+                    hits[i].append(items)
+    print('  --->Finished Parsing')
     print()
     return hits
 
