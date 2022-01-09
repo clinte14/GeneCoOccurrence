@@ -1,27 +1,9 @@
 import re, os, sys
 from Bio.Blast import NCBIXML
 import pandas as pd
-    
-# performs online NCBIWWW.qblast if 'skipblast' flag is set to False (default). Output is XML formatted BLAST 
-# results (one per search query/line in input file) in 01_BLAST_results folder.  
-#def query_BLAST(flag_values):
-#    file = open(flag_values['input'], 'r').read().split('\n') #rU, was r
-#    print("BLASTing using evalue: '{}' and entrez query '{}'".format(flag_values['evalue'], flag_values['entrez']))
-#    for i in file:
-#        print("Currently BLASTing {}...".format(i))
-#        result_handle = NCBIWWW.qblast("blastp", "refseq_protein", i, expect=flag_values['evalue'], entrez_query = flag_values['entrez'])
-#        time.sleep(3)
-#        
-#        out_handle = open(flag_values['output'] + "/" + "01_BLAST_results" + "/" + i + "_BLAST_results.xml", "w")
-#        print('  --->Finished {}'.format(i))
-#        out_handle.write(result_handle.read())
-#    result_handle.close()  
 
-# parse XML files located in 01_BLAST_results folder. Discard MULTISPECIES hits. Strip remaining BLAST hits to  
-# only include specices name [hit_id] and add to hits dictionary, query gene is key and associated value is list   
-# of strings formatted as species name [hit_id]
 def parse_merge_BLAST(flag_values):
-    hits = {}
+    output_hits = {}
     file = []
 #    all_files = os.listdir(flag_values['output'])
 #    all_files = flag_values['output']
@@ -41,30 +23,31 @@ def parse_merge_BLAST(flag_values):
         sys.exit(0)
     
     file.sort()
+    print(file)
     # loop through .xml files in /01_BLAST_results
     for i in file:
         print("Parsing BLAST file {}...".format(i))
         print()
         xml_handle = open(os.path.join(input_dir,i))
         xml_record = NCBIXML.read(xml_handle)
-    # debug        hits[i] = ["test", "some", "strings"]
-        hits[i] = []
+        file_name = i[:-4]
+        output_hits[file_name] = []
         
-        # loop through single .xml file, remove 'MULTISPECIES' hits. Such hits are always non-species taxonomic levels (eg genus, family, order)
-        # parses remaing hits, strips off unwanted data
+        # loop through single .xml file
         # writes these to 'hits' dictionary with gene as key and value is list containing associated hits
         for hit_title in xml_record.alignments:
-           # print(hit_title.title)
-           # print()
-            stripped = re.findall('\|(.*?)\|', hit_title.title)
-            for items in stripped:
-                # Remove non-redundant protein records
-                if not items.startswith('WP'):
-                    print(items)
-                    hits[i].append(items)
+            blast_hits=hit_title.title.split('>')
+
+            for h in blast_hits:
+                if h.startswith('ref') == False:
+                    db=h.split('|')[0]
+                    species=re.findall('\[(.*?)\]',h)[0]
+                    protein_ID=re.findall('\|(.*?)\|',h)[0].split('.')[0][:-4]
+                    UID=species+ '[' + db + '|' + protein_ID + 'xxxx]'
+                    output_hits[file_name].append(UID)
     print('  --->Finished Parsing')
     print()
-    return hits
+    return output_hits 
 
 # write hits dictionary to Pandas DF, query gene is column and hits are rows. Write dataframe to 02_PA_matrix      
 # folder as PA_matrix.csv.

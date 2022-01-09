@@ -62,9 +62,8 @@ def correlation_calcs(flag_values):
             # Transpose rows/columns with columns/rows to fill in bottom triangles
             else:
                 Wij_df.loc[row, column] = Wij_df.loc[column, row]
-#    for c in df.columns:
-#    df[c] = pd.to_numeric(df[c], errors='coerce')
-#    Wij_df[:,:] = pd.to_numeric(Wij_df[:,:], errors='coerce')
+
+
     Wij_df.to_csv(flag_values['output'] + '/03_Correlation_calcs/' + 'Wij_df.csv')
 
 #    Wij_df_sorted = pd.DataFrame()
@@ -73,12 +72,24 @@ def correlation_calcs(flag_values):
     f = open(flag_values['output'] + '/04_Correlog_values/'+ "Wij_matrix.csv", "w")
     writer = csv.writer(f)
 #    Wij_df.insert(0,"")
+    scores = {}
     for row in gene_names:
-        #sort columns by a given row highest to lowest
+        #this portion of loop sorts each row (eg gene) scores highest to lowest
+        #put rows in order lowest to highest
         Wij_df = Wij_df.sort_values(by=row, ascending=False, axis=1, na_position='last')
-#        temp = Wij_df.columns.tolist()
-#        header_text = row + "----> " 
-#        writer.writerow([header_text])
+        subset_df=Wij_df.loc[row,:]
+        current_index_list = subset_df.dropna().sort_values().index.tolist()
+        current_score_list = subset_df.dropna().sort_values().tolist()
+        outer_list=[]
+        for i in range(len(current_index_list)):
+            inner_list=[]
+            inner_list=[current_index_list[i], current_score_list[i]]
+            outer_list.append(inner_list)
+        scores[row]=outer_list
+
+
+        #this portion of loop writes Wij_matrix.csv file
+        #sort columns by a given row highest to lowest
         current_columns = Wij_df.columns.tolist()
         current_columns.remove(row)
         current_columns.insert(0,"---->")
@@ -91,8 +102,8 @@ def correlation_calcs(flag_values):
         current_row.remove(np.nan)
         writer.writerow(current_row)
         Wij_outerDict[row] = dict(zip(Wij_df.columns, Wij_df.loc[row,:]))
-    f.close()
 
+    f.close()
 #    f = open("sample.csv", "w")
 #    writer = csv.DictWriter(f, fieldnames=outerDict['VC0175.xml'].keys())
 #    writer.writerows(outerDict['VC0175.xml'].values())
