@@ -2,52 +2,76 @@ import re, os, sys
 from Bio.Blast import NCBIXML
 import pandas as pd
 
+def clean_BLAST_xml(flag_values):
+    '''
+    Search and remove 'CREATE_VIEW from BLAST .xml input file.
+
+    Bug workaround for NCBIWWW. Occasionally NCBI BLAST online writes 'CREATE_VIEW' into 
+    the BLAST .xml output with no associated '<>' tags, and this causes xml parsing in 
+    Biopython to fail. See: https://github.com/biopython/biopython/issues/3342
+    '''
+
+    print('Cleaning up BLAST results: {}'.format(flag_values['input']))
+    with open(flag_values['input'], 'r') as file:
+        xml_data = file.read()
+        xml_data = xml_data.replace('CREATE_VIEW','')
+
+    with open(flag_values['input'], 'w') as file:
+        file.write(xml_data)
+
 def parse_merge_BLAST(flag_values):
+    '''
+    Converts BLAST query protein ID's to common gene names using \
+    .csv if -c flag was invoked.
+
+    Parameters
+    ----------
+    flag_values: dict 
+        Arg values capatured from keyboard in housekeeping.py
+ 
+    Returns
+    -------
+    '''
     output_hits = {}
     file = []
-#    all_files = os.listdir(flag_values['output'])
-#    all_files = flag_values['output']
-    input_dir = flag_values['input']
-    print("Input Dir: " + input_dir)
-    
-    # take list of files from input directory ('all_files') and place only files ending with ".xml" in 'file' variable
-    for index, value in enumerate(os.listdir(input_dir)):
-        if value[-4:] == ".xml":
-            file.append(value)
-    
-    # throw error and quit if no .xml BLAST input file(s)
-    if len(file) == 0:
-        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        print("No '.xml' formatted output detected in /01_BLAST_results/; quitting  now...")
-        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        sys.exit(0)
-    
-    file.sort()
-    print(file)
-    # loop through .xml files in /01_BLAST_results
-    for i in file:
-        print("Parsing BLAST file {}...".format(i))
-        print()
-        xml_handle = open(os.path.join(input_dir,i))
-        xml_record = NCBIXML.read(xml_handle)
-        file_name = i[:-4]
-        output_hits[file_name] = []
-        
-        # loop through single .xml file
-        # writes these to 'hits' dictionary with gene as key and value is list containing associated hits
+
+    xml_input = flag_values['input']
+    print("Parsing BLAST file '{}'...".format(xml_input))
+    xml_handle = open(xml_input)
+    xml_records = NCBIXML.parse(xml_handle)
+
+    for xml_record in xml_records:
+        gene_name=xml_record.query_id
+        output_hits[gene_name]=[]
+
         for hit_title in xml_record.alignments:
             blast_hits=hit_title.title.split('>')
 
             for h in blast_hits:
                 if h.startswith('ref') == False:
-                    db=h.split('|')[0]
-                    species=re.findall('\[(.*?)\]',h)[0]
-                    protein_ID=re.findall('\|(.*?)\|',h)[0].split('.')[0][:-4]
+
+                    if bool(h.split('|')):
+                        db=h.split('|')[0]
+                    else:
+                        db='NODB'
+                        UID += (db + '|')
+
+                    if bool(re.findall('\[(.*?)\]',h)):
+                        species=re.findall('\[(.*?)\]',h)[0]
+                    else:
+                        species='NOSPECIES'
+
+                    if bool(re.findall('\|(.*?)\|',h)):
+                        protein_ID=re.findall('\|(.*?)\|',h)[0].split('.')[0][:-4]
+                    else:
+                        protein_ID='NOPROTEINID'
+
                     UID=species+ '[' + db + '|' + protein_ID + 'xxxx]'
-                    output_hits[file_name].append(UID)
+                    #print("UID: '{}".format(UID))
+                    output_hits[gene_name].append(UID)
     print('  --->Finished Parsing')
     print()
-    return output_hits 
+    return output_hits
 
 # write hits dictionary to Pandas DF, query gene is column and hits are rows. Write dataframe to 02_PA_matrix      
 # folder as PA_matrix.csv.
@@ -56,9 +80,10 @@ def create_pa(hits, flag_values):
     # create 'merged_BLAST.csv' file in /02_PA_Matrix/ containing all values in 'hits' dictionary from parse_merge_BLAST()
     merged_df = pd.DataFrame({ key:pd.Series(value) for key, value in hits.items() })
     merged_df = merged_df.reindex(sorted(merged_df.columns), axis=1)
-    merged_df.to_csv(flag_values['output'] + '/02_PA_matrix/' + 'merged_BLAST.csv')
+    merged_df_dir=os.path.join(flag_values['output'],'02_PA_matrix','merged_BLAST.csv')
+    merged_df.to_csv(merged_df_dir)
     
-    print("  --->Wrote 'merged_BLAST.csv' to '{}".format(flag_values['output']) + "/02_PA_matrix/'..." + '\n') 
+    print("  --->Wrote 'merged_BLAST.csv' to '{}'".format(merged_df_dir + '\n'))
     
 #    # read merged_df back from file, in case user made manual changes
 #    merged_csv = pd.read_csv(flag_values['output'] + '/02_PA_matrix/' + 'merged_BLAST.csv', index_col=0)
@@ -81,5 +106,6 @@ def create_pa(hits, flag_values):
             pa_df.at[value,column_name] = 1      
     # Replace nan with zero
     pa_df = pa_df.fillna(value=0)
-    pa_df.to_csv(flag_values['output'] + '/02_PA_matrix/' + 'pa_matrix.csv')
-    print("  --->Wrote 'pa_matrix.csv' to '{}".format(flag_values['output']) + "/02_PA_matrix/'..." + '\n') 
+    pa_dir = os.path.join(flag_values['output'] ,'02_PA_matrix','pa_matrix.csv')
+    pa_df.to_csv(pa_dir)
+    print("  --->Wrote 'pa_matrix.csv' to '{}'".format(pa_dir + '\n'))
