@@ -62,6 +62,7 @@ ex. [@DomPizzie](https://twitter.com/dompizzie) -->
 This project is licensed under the GNU General Public License, version 2 License - see the LICENSE.md file for details
 
 ## Acknowledgments
+<a href="https://www.flaticon.com/free-icons/genetic" title="genetic icons">Genetic icons created by Freepik - Flaticon</a>
 <!--
 Inspiration, code snippets, etc.
 * [awesome-readme](https://github.com/matiassingers/awesome-readme)
