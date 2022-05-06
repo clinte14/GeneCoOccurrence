@@ -11,7 +11,7 @@ A tool for exploring relationships within small sets of unclassified microbial g
 
 ## Description
 
-GeneCoOccurrence provides an accessible tool for biologist to explore interactions and functional relationships between small sets of unclassified genes by calculating the co-occurrence of homologues genes in individual strains from across the sequenced bacterial domain. 
+GeneCoOccurrence provides an accessible tool for biologist to explore interactions and functional relationships between small sets of unclassified genes. It works by calculating the co-occurrence of homologues genes in individual strains from across the sequenced bacterial domain. **May 6th, 2022: Expect a biorxiv draft soon!**
 
 
 ## Getting Started
