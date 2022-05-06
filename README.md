@@ -49,7 +49,7 @@ ex. [@DomPizzie](https://twitter.com/dompizzie) -->
     * See [commit change]() or See [release history]()
 * 0.1
     * Initial Release
---!>
+-->
 ## License
 
 This project is licensed under the GNU General Public License, version 2 License - see the LICENSE.md file for details
@@ -62,4 +62,5 @@ Inspiration, code snippets, etc.
 * [dbader](https://github.com/dbader/readme-template)
 * [zenorocha](https://gist.github.com/zenorocha/4526327)
 * [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
---!>
+THIS README from https://gist.github.com/DomPizzie/7a5ff55ffa9081f2de27c315f5018afc
+-->
