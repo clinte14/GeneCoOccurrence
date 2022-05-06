@@ -4,7 +4,7 @@ A tool for exploring relationship within small sets of unclassified microbial ge
 
 ## Description
 
-<!-- An in-depth paragraph about your project and overview of use. -->
+GeneCoOccurrence provides an accessible tool for wet-lab biologist to explore interactions and functional relationships between small sets of unclassified genes by calculating the co-occurrence of homologues genes in individual strains from across the sequenced bacterial domain. 
 
 
 ## Getting Started
