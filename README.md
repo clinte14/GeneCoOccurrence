@@ -1,6 +1,13 @@
-# GeneCoOccurrence
 
-A tool for exploring relationship within small sets of unclassified microbial genes.
+<h1 align="center">GeneCoOccurrence</h1>
+
+<p align="center">
+  <img width="256" height="256" src="https://user-images.githubusercontent.com/35710809/167226809-ea5ec455-674c-4111-a1b0-acb84f29b3ee.png">
+</p>
+<p align="center"><b>
+A tool for exploring relationships within small sets of unclassified microbial genes.
+</p></b>
+
 
 ## Description
 
