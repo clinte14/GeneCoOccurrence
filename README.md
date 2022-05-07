@@ -26,7 +26,7 @@ For now, you must install dependencies (see below) and run via Python3 interpret
 </pre>
 * `-i <Input File>`<br>
   *Required*<br>
-  BLAST results of your genes of interest (saved as a single .xml file, which is an available output format via BLAST on www.ncbi.nlm.nih.gov)
+  BLAST results of your genes of interest (saved as a single .xml file, which is an available output format for BLAST on NCBI website and stand-alone command line tool).
 
 * `-o <Output Directory>`<br>
   *Optional: If not provided defaults to current working directory*<br>
