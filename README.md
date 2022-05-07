@@ -22,7 +22,7 @@ For now, you must install dependencies (see below) and run via Python3 interpret
 ### Basic Usage
 
 <pre>
-<b>main.py -i blast_output.xml -o /home/name/my_project</b>
+main.py -i blast_output.xml -o /home/name/my_project
 </pre>
 * `-i <Input File>`<br>
   *Required*<br>
