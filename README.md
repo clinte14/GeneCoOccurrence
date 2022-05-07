@@ -5,7 +5,7 @@
   <img width="256" height="256" src="https://user-images.githubusercontent.com/35710809/167226809-ea5ec455-674c-4111-a1b0-acb84f29b3ee.png">
 </p>
 <p align="center"><b>
-A Tool for Exploring Relationships Within Small Sets of Unclassified Microbial Genes.
+A Tool for Exploring Relationships Within Small Sets of Unclassified Microbial Genes
 </p></b>
 
 
