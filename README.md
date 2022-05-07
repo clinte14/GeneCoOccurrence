@@ -34,7 +34,7 @@ main.py -i blast_output.xml -o /home/name/my_project
 
 ### Helpful Flags / Options
 <pre>
-main.py -i blast_output.xml -o /home/name/my_project <b>-c prot_ID_to_common_name.csv</b>
+main.py -i blast_output.xml -o /home/name/my_project <i>-c prot_ID_to_common_name.csv</i>
 </pre>
 * `-c <Common Name>`<br>
   *Optional: See details below for default (a) or secondary default (b)*<br>
