@@ -25,7 +25,7 @@ def create_folders(dir_path):
 def parse_flags():
     dir_path = os.path.dirname(os.path.realpath('__file__'))  
     
-    parser = argparse.ArgumentParser(description="Correlogy", prog='correlog')
+    parser = argparse.ArgumentParser(description="GeneCoOccurence", prog='gco')
 
     parser.add_argument("-i", "--input", 
         required=True, 

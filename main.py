@@ -41,7 +41,7 @@ def main():
     
 
     #calculate Cij (# species common to gene i & j), Rij (Pearson Correlation)
-    #and Wij (Partial Correlation, ie Correlogy)
+    #and Wij (Partial Correlation)
     Wij_df= correlation_calcs(flag_values)
     network_list = calc_mrs(Wij_df, flag_values)
 
