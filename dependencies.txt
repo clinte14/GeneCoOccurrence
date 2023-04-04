@@ -1,0 +1,2 @@
+pip install biopython
+pip install graphviz
