@@ -1,6 +1,7 @@
 import os.path
 import argparse, datetime, json
 import pandas as pd
+import sys
 def create_folders(dir_path):
     dirs = ['00_log',
             '01_blast_input', 
@@ -43,9 +44,14 @@ def parse_flags():
     arg_dict=vars(args)
 
     # Convert relative paths (eg './' in BASH) to absolute paths
-    arg_dict['input'] = os.path.abspath(arg_dict['input'])
-    arg_dict['output'] = os.path.abspath(arg_dict['output'])
-    arg_dict['common_name'] = os.path.abspath(arg_dict['common_name'])
+    if arg_dict['input']!=None:
+        arg_dict['input'] = os.path.abspath(arg_dict['input'])
+
+    if arg_dict['output']!=None:
+        arg_dict['output'] = os.path.abspath(arg_dict['output'])  
+
+    if arg_dict['common_name']!=None:
+        arg_dict['common_name'] = os.path.abspath(arg_dict['common_name'])
 
     print("dir_path: " + str(dir_path))
     return arg_dict
@@ -107,7 +113,7 @@ def convert_protID_to_common_names(flag_values, hits):
         # Rename keys that are protein IDs with common gene names. Using lists from comment above.
         for k in common_name_list:
             for hit in hits_list:
-                if k in hit:
+                if k == hit:
                     print("Common name:'{}' is in hit name: '{}'".format(k,hit))
                     hits[common_name[k]] = hits[hit]
                     del hits[hit]

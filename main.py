@@ -45,7 +45,7 @@ def main():
     Wij_df= correlation_calcs(flag_values)
     network_list = calc_mrs(Wij_df, flag_values)
 
-    create_network_map(Wij_df, flag_values, network_list)
+    create_network_map(flag_values, network_list)
     create_heatmap(Wij_df, flag_values)
 
 if __name__ == "__main__":

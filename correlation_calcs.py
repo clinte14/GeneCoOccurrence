@@ -68,6 +68,7 @@ def correlation_calcs(flag_values):
 
     #need print statement here to console
     return Wij_df
+
 def calc_mrs(Wij_df, flag_values):
     Wij_outerDict = {}
     gene_names =  Wij_df.dtypes.index

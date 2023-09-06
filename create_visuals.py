@@ -4,6 +4,8 @@ import seaborn as sns
 import os
 import numpy as np
 import graphviz
+import networkx as nx
+from pyvis.network import Network
 
 #https://towardsdatascience.com/visualising-stocks-correlations-with-networkx-88f2ee25362e
 #https://www.cl.cam.ac.uk/teaching/1314/L109/tutorial.pdf
@@ -14,26 +16,47 @@ import graphviz
 #https://stackoverflow.com/questions/32303217/how-to-use-pearson-correlation-as-distance-metric-in-scikit-learn-agglomerative
 #https://stats.stackexchange.com/questions/275720/does-any-other-clustering-algorithms-take-correlation-as-distance-metric-apart
 #https://online.stat.psu.edu/stat555/node/85/
-def create_network_map(Wij_df, flag_values, network_list):
+
+def create_network_map(flag_values, network_list):
+    #breakpoint()
+    for count, value in enumerate(network_list):
+        network_list[count][2] = '{:.4f}'.format(value[2])
+r
     # Create 'dot' engine style graphviz network visual
     network = graphviz.Digraph('Maximum_Related_Networks_dot', engine='dot', comment='')
 
     for i in network_list:
         edge_thickness = str(i[2]*5)
-        correlog_score = '{:.4f}'.format(i[2])
+        correlog_score = i[2]
         network.edge(i[0], i[1], penwidth=edge_thickness, xlabel=correlog_score)
 
     network.render(directory=os.path.join(flag_values['output'], '05_final_outputs'))
 
-    # Create 'circl' engine style graphviz network visual
+    #DG = nx.DiGraph()
+    #DG.add_weighted_edges_from(network_list)
+    nx_graph = nx.DiGraph()
+    for item in network_list:
+        nx_graph.add_node(item[0])
+    for item in network_list:
+        nx_graph.add_edge(item[0],item[1],label=item[2])
+
+    nt = Network('800px', '1080px')
+    nt.from_nx(nx_graph)
+    nt.toggle_physics(True)
+    nt.show_buttons(True)
+    os.chdir(os.path.join(flag_values['output'], '05_final_outputs'))
+    nt.write_html("MSR_network.html",notebook=False)
+
+    # Create 'circo' engine style graphviz network visual
     network = graphviz.Digraph('Maximum_Related_Networks_circo', engine='circo', comment='') 
 
     for i in network_list:
         edge_thickness = str(i[2]*5)
-        correlog_score = '{:.4f}'.format(i[2])
+        correlog_score = correlog_score = i[2]
         network.edge(i[0], i[1], penwidth=edge_thickness, xlabel=correlog_score)
 
     network.render(directory=os.path.join(flag_values['output'], '05_final_outputs'))
+
 
     #need print statement here to console
 
