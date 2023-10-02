@@ -21,7 +21,7 @@ def create_network_map(flag_values, network_list):
     #breakpoint()
     for count, value in enumerate(network_list):
         network_list[count][2] = '{:.4f}'.format(value[2])
-r
+
     # Create 'dot' engine style graphviz network visual
     network = graphviz.Digraph('Maximum_Related_Networks_dot', engine='dot', comment='')
 
@@ -66,7 +66,7 @@ def create_heatmap(Wij_df, flag_values):
     Wij_df = Wij_df.astype(float)
 
     # Generate a mask for the upper triangle; True = do NOT show
-    mask = np.zeros_like(Wij_df, dtype=np.bool)
+    mask = np.zeros_like(Wij_df, dtype=bool)
     mask[np.triu_indices_from(mask)] = True
 
     # Set up the matplotlib figure
@@ -94,7 +94,7 @@ def create_heatmap(Wij_df, flag_values):
         center=0,      # The center value of the legend. With divergent cmap, where white is
         square=True,   # Force cells to be square
         linewidths=.5, # Width of lines that divide cells
-        cbar_kws={'label' : 'Correlog Value','shrink': .75}  # Extra kwargs for the legend; 
+        cbar_kws={'label' : 'Co-Occurrence Value','shrink': .75}  # Extra kwargs for the legend; 
         # in this case, shrink by 50%
     )
 
