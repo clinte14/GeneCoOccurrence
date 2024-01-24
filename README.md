@@ -54,7 +54,7 @@ main.py -i blast_output.xml -o /home/name/my_project <i>-c prot_ID_to_common_nam
 ![image](https://github.com/clinte14/GeneCoOccurrence/assets/35710809/98b89fc7-4e34-4efc-befb-c476e5ceec60)
 **Workflow of GeneCoOccurrence**. Output folders in grey, input file in blue, intermediate output files in red, final output files in green. **A.** User input is either a presence/absence matrix OR BLAST results. **B.** A presence/absence matrix is generated if BLAST results were chosen as input. **C.** The co-occurrence for all GOIs *i* to *j* is summed and fed into a Pearson Correlation followed by a partial correlation correction which results in co-occurrence score. **D.** Output includes a co-occurrence heatmap of all genes *i* to *j*, maximum related subnetwork visuals, and a co-occurrence table.
 
-## Help
+## Tutorial with Sample Data
 <!-- Any advise for common problems or issues.
 ```
 command to run if program contains helper info
