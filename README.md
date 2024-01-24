@@ -51,12 +51,8 @@ main.py -i blast_output.xml -o /home/name/my_project <i>-c prot_ID_to_common_nam
      ```
 
 ### Workflow
-*This section under construction (May 12th, 2022)*
-![gene_cooccurrence_flowchart](https://user-images.githubusercontent.com/35710809/167227818-ada05bd7-2f55-4774-97b0-174374587542.png)
-**An overview of GeneCoOccurrence** 
-*Input files in blue, intermediate output files in red, final output files in green*. 
-
-The BLAST file containing orthologues of genes of interest (GOI) is input. The species hits for all GOIs are merged and a presence/absence matrix is generated. The co-occurrence for all genes *i* to *j* is summed and fed into a Pearson Correlation followed by a partial correlation correction. Ouput includes a heatmap showing correlation of all genes *i* to *j*, maximum related subnetwork visuals, and a dendrogram derived from complete-linkage clustering of the final correlation matrix.
+![image](https://github.com/clinte14/GeneCoOccurrence/assets/35710809/98b89fc7-4e34-4efc-befb-c476e5ceec60)
+**Workflow of GeneCoOccurrence**. Output folders in grey, input file in blue, intermediate output files in red, final output files in green. **A.** User input is either a presence/absence matrix OR BLAST results. **B.** A presence/absence matrix is generated if BLAST results were chosen as input. **C.** The co-occurrence for all GOIs *i* to *j* is summed and fed into a Pearson Correlation followed by a partial correlation correction which results in co-occurrence score. **D.** Output includes a co-occurrence heatmap of all genes *i* to *j*, maximum related subnetwork visuals, and a co-occurrence table.
 
 ## Help
 <!-- Any advise for common problems or issues.
