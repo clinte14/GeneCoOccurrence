@@ -1,0 +1,3 @@
+Executed the following in /home/clint/Dropbox/PhD/GeneCoOccurrence_project/GeneCoOccurrence/tutorial/manure_metagenomic_study/unenriched_gene at 2024-01-24 16:13:12.472293:
+
+gco -i ./tutorial/manure_metagenomic_study/unenriched_gene_matrix.csv -o ./tutorial/manure_metagenomic_study/unenriched_gene
