@@ -20,17 +20,7 @@ from pyvis.network import Network
 def create_network_map(flag_values, network_list):
     #breakpoint()
     for count, value in enumerate(network_list):
-        network_list[count][2] = '{:.4f}'.format(value[2])
-
-    # Create 'dot' engine style graphviz network visual
-    network = graphviz.Digraph('Maximum_Related_Networks_dot', engine='dot', comment='')
-
-    for i in network_list:
-        edge_thickness = str(i[2]*5)
-        correlog_score = i[2]
-        network.edge(i[0], i[1], penwidth=edge_thickness, xlabel=correlog_score)
-
-    network.render(directory=os.path.join(flag_values['output'], '05_final_outputs'))
+        network_list[count][2] = '{:.3f}'.format(value[2])
 
     #DG = nx.DiGraph()
     #DG.add_weighted_edges_from(network_list)
@@ -38,24 +28,43 @@ def create_network_map(flag_values, network_list):
     for item in network_list:
         nx_graph.add_node(item[0])
     for item in network_list:
-        nx_graph.add_edge(item[0],item[1],label=item[2])
+        #add weighted line
+        if float(item[2]) > 0:
+            nx_graph.add_edge(item[0],item[1],label=item[2],weight=float(item[2])*10)
+        else:
+            nx_graph.add_edge(item[0],item[1],label=item[2],weight=1)
 
     nt = Network('800px', '1080px')
     nt.from_nx(nx_graph)
     nt.toggle_physics(True)
     nt.show_buttons(True)
-    os.chdir(os.path.join(flag_values['output'], '05_final_outputs'))
+    os.chdir(os.path.join(flag_values['output'], '03_visual_output'))
     nt.write_html("MSR_network.html",notebook=False)
+
+    # Create 'dot' engine style graphviz network visual
+    network = graphviz.Digraph('Maximum_Related_Networks_dot', engine='dot', comment='')
+
+    for i in network_list:
+        co_score = i[2]
+        if float(i[2]) <= 0:
+            edge_thickness = 1      
+        else:
+            edge_thickness = int(i[2].split('.')[-1][0])
+        network.edge(i[0], i[1], penwidth=str(edge_thickness), xlabel=co_score, dir='none')
+    network.render(directory=os.path.join(flag_values['output'], '03_visual_output'))
 
     # Create 'circo' engine style graphviz network visual
     network = graphviz.Digraph('Maximum_Related_Networks_circo', engine='circo', comment='') 
 
     for i in network_list:
-        edge_thickness = str(i[2]*5)
-        correlog_score = correlog_score = i[2]
-        network.edge(i[0], i[1], penwidth=edge_thickness, xlabel=correlog_score)
+        co_score = i[2]
+        if float(i[2]) <= 0:
+            edge_thickness = 1      
+        else:
+            edge_thickness = int(i[2].split('.')[-1][0])
+        network.edge(i[0], i[1], penwidth=str(edge_thickness), xlabel=co_score, dir='none')
 
-    network.render(directory=os.path.join(flag_values['output'], '05_final_outputs'))
+    network.render(directory=os.path.join(flag_values['output'], '03_visual_output'))
 
 
     #need print statement here to console
@@ -92,16 +101,17 @@ def create_heatmap(Wij_df, flag_values):
         vmax=1,       # The maximum value of the legend. All higher vals will be same color
         vmin=-1,      # The minimum value of the legend. All lower vals will be same color
         center=0,      # The center value of the legend. With divergent cmap, where white is
-        square=True,   # Force cells to be square
+        square=False,   # Force cells to be square
         linewidths=.5, # Width of lines that divide cells
         cbar_kws={'label' : 'Co-Occurrence Value','shrink': .75}  # Extra kwargs for the legend; 
-        # in this case, shrink by 50%
+        # in this case, shrink
     )
 
     res.set_xticklabels(res.get_xmajorticklabels(), fontsize = 12)
     res.set_yticklabels(res.get_ymajorticklabels(), fontsize = 12)
     res.yaxis.label.set_size(20)
 
-    heatmap_dir = os.path.join(flag_values['output'], '05_final_outputs','heatmap.png')
+    heatmap_dir = os.path.join(flag_values['output'], '03_visual_output','heatmap.png')
+    fig.tight_layout()
     fig.savefig(heatmap_dir)
     print('Heatmap written to: {}'.format(heatmap_dir) + '\n')

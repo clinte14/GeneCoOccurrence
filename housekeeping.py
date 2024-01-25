@@ -3,16 +3,21 @@ import argparse, datetime, json
 import pandas as pd
 import sys
 def create_folders(dir_path):
-    dirs = ['00_log',
-            '01_blast_input', 
-            '02_PA_matrix', 
-            '03_correlation_calcs', 
-            '04_correlog_values', 
-            '05_final_outputs']
+    dirs = ['00_pre_process',
+            '01_PA_matrix', 
+            '02_correlation', 
+            '03_visual_output']
+
+    if not os.path.exists(dir_path):
+        os.mkdir(dir_path)
+        print("Checking directory '{}'... ".format(dir_path))
+        print('  --->Directory Created')
+    else:
+        print("Checking directory '{}'... ".format(dir_path))
+        print('  --->Directory Already Exists')
 
     for current_dir in dirs:
         current_path = os.path.join(dir_path,current_dir)
-
         if not os.path.exists(current_path):
             os.mkdir(current_path)
             print("Checking directory '{}'... ".format(current_path))
@@ -26,11 +31,11 @@ def create_folders(dir_path):
 def parse_flags():
     dir_path = os.path.dirname(os.path.realpath('__file__'))  
     
-    parser = argparse.ArgumentParser(description="GeneCoOccurence", prog='gco')
+    parser = argparse.ArgumentParser(description="GeneCoOccurence v0.1. Please see https://github.com/clinte14/GeneCoOccurrence", prog='gco')
 
     parser.add_argument("-i", "--input", 
         required=True, 
-        help="File with BLAST results containing homologues in .xml format. REQUIRED.")
+        help="REQUIRED. Input file with either BLAST results in .xml format OR a comma-seperated presence/absence .csv file.")
 
     parser.add_argument("-o", "--output", 
         default=dir_path,
@@ -54,19 +59,21 @@ def parse_flags():
         arg_dict['common_name'] = os.path.abspath(arg_dict['common_name'])
 
     print("dir_path: " + str(dir_path))
+    arg_dict['command'] = " ".join(sys.argv)
+
     return arg_dict
 
 
-# save flags options and paramaters to "command.txt" file in 00_Settings folder
+# save flags options and paramaters to "log.txt" file in 00_Settings folder
 def save_flags(flags):
-    with open(os.path.join(flags['output'],"00_log",'command.txt'), 'w') as file:
+    with open(os.path.join(flags['output'],"00_pre_process",'log.txt'), 'w') as file:
 
         currentDT = datetime.datetime.now()
 
         file.write("Executed the following in " + flags['output'] + " at " \
-            + str(currentDT) + ":\n" + json.dumps(flags))
+            + str(currentDT) + ":\n\n" + flags['command'])
 
-    print("Writing flags to 'command.txt' in '{}'... ".\
+    print("Writing flags to 'log.txt' in '{}'... ".\
         format(os.path.join(flags['output'],"00_settings")) )
 
     print("  --->Flags written\n")

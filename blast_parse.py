@@ -80,7 +80,7 @@ def create_pa(hits, flag_values):
     # create 'merged_BLAST.csv' file in /02_PA_Matrix/ containing all values in 'hits' dictionary from parse_merge_BLAST()
     merged_df = pd.DataFrame({ key:pd.Series(value) for key, value in hits.items() })
     merged_df = merged_df.reindex(sorted(merged_df.columns), axis=1)
-    merged_df_dir=os.path.join(flag_values['output'],'02_PA_matrix','merged_BLAST.csv')
+    merged_df_dir=os.path.join(flag_values['output'],'01_PA_matrix','merged_BLAST.csv')
     merged_df.to_csv(merged_df_dir)
     
     print("  --->Wrote 'merged_BLAST.csv' to '{}'".format(merged_df_dir + '\n'))
@@ -106,6 +106,6 @@ def create_pa(hits, flag_values):
             pa_df.at[value,column_name] = 1      
     # Replace nan with zero
     pa_df = pa_df.fillna(value=0)
-    pa_dir = os.path.join(flag_values['output'] ,'02_PA_matrix','pa_matrix.csv')
+    pa_dir = os.path.join(flag_values['output'] ,'01_PA_matrix','pa_matrix.csv')
     pa_df.to_csv(pa_dir)
     print("  --->Wrote 'pa_matrix.csv' to '{}'".format(pa_dir + '\n'))

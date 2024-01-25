@@ -9,15 +9,15 @@ import os
 def correlation_calcs(flag_values):
     '''
     '''
-    # Open prescence/abscence matrix from /02_PA_matrix/ directory 
-    with open(os.path.join(flag_values['output'],'02_PA_matrix','pa_matrix.csv'), 'r') as infile:
+    # Open prescence/abscence matrix from /01_PA_matrix/ directory 
+    with open(os.path.join(flag_values['output'],'01_PA_matrix','pa_matrix.csv'), 'r') as infile:
             # Create dataframe from BLAST results, header = row# w/ column names
             pa_df = pd.read_csv(infile, sep=',', header=0)
+    #clean up indexing and names in our pa_df (presence/absence dataframe)
+    first_col = pa_df.columns[0]
+    pa_df = pa_df.rename(columns={first_col : "species"})
     
-    #clean up indexing and names in our pa_df (prescence/abscence dataframe)
-    pa_df = pa_df.rename(columns={"Unnamed: 0" : "species"})
-    
-    #an index of gene_names. Do not include indexer row '0' or 'species' column '1' of pa_df (prescence/abscence dataframe)
+    #an index of gene_names. Do not include indexer row '0' or 'species' column '1' of pa_df (presence/abscence dataframe)
     gene_names =  pa_df.dtypes.index[1:]
     
     #this function calculates all the terms needed for pearson correlation
@@ -50,7 +50,7 @@ def correlation_calcs(flag_values):
             Pjj = Rij_inverse_df.loc[column_to_right_name, column_to_right_name]
             #print("Pij=", Pij, "Pii=", Pii, "Pjj=", Pjj)
             Wij_df.at[column_name, column_to_right_name] = -((Pij) / (math.sqrt(Pii * Pjj)))
-    Wij_df.to_csv(os.path.join(flag_values['output'],'03_correlation_calcs','Wij_df_triangle.csv'))
+    Wij_df.to_csv(os.path.join(flag_values['output'],'02_correlation','Wij_df_triangle.csv'))
     print("->Wrote 'Wij_df_triangle.csv' to '{}".format(os.path.join(flag_values['output']),"04_correlog_values..") + '\n') 
 
            
@@ -64,7 +64,7 @@ def correlation_calcs(flag_values):
             else:
                 Wij_df.loc[row, column] = Wij_df.loc[column, row]
 
-    Wij_df.to_csv(os.path.join(flag_values['output'],'03_correlation_calcs','Wij_df.csv'))
+    Wij_df.to_csv(os.path.join(flag_values['output'],'02_correlation','Wij_df.csv'))
 
     #need print statement here to console
     return Wij_df
@@ -73,7 +73,7 @@ def calc_mrs(Wij_df, flag_values):
     Wij_outerDict = {}
     gene_names =  Wij_df.dtypes.index
     
-    f = open(os.path.join(flag_values['output'],'04_correlog_values',"Wij_matrix.csv"), "w")
+    f = open(os.path.join(flag_values['output'],'02_correlation',"Wij_matrix.csv"), "w")
     writer = csv.writer(f)
     
     network_list=[]
@@ -136,7 +136,7 @@ def calc_pearson_terms(flag_values, pa_df, gene_names):
             print("  --->", column_to_right_name, Cij)
             Cij_df.at[column_name, column_to_right_name] = Cij
     # write Cij_df to disk
-    cij_dir=os.path.join(flag_values['output'],'03_correlation_calcs','Cij_df.csv')
+    cij_dir=os.path.join(flag_values['output'],'02_correlation','Cij_df.csv')
     Cij_df.to_csv(cij_dir)
     print("Wrote 'Cij_df.csv' aka # species with both gene 'i' & gene 'j' to '{}".format(cij_dir + '\n')) 
     # Debug print(Cij, index, df.loc[index, "species"]) 
@@ -163,7 +163,7 @@ def pearson_corr_calc(flag_values, pa_df, gene_names, E_i, N, Cij_df):
             Rij_df.at[column_name, column_to_right_name] = ((current_Cij * N) - (current_E_i * current_E_j)) / (
                     math.sqrt(current_E_i) * math.sqrt(current_E_j) * math.sqrt(N-current_E_i) * math.sqrt(N-current_E_j))
     # write Rij_df to disk
-    rij_triangle_dir=os.path.join(flag_values['output'],'03_correlation_calcs','Rij_df_triangle.csv')
+    rij_triangle_dir=os.path.join(flag_values['output'],'02_correlation','Rij_df_triangle.csv')
     Rij_df.to_csv(rij_triangle_dir)
     print("->Wrote 'Rij_df_triangle.csv' aka Pearson Correlations to '{}".format(rij_triangle_dir + '\n'))
             
@@ -177,7 +177,7 @@ def pearson_corr_calc(flag_values, pa_df, gene_names, E_i, N, Cij_df):
             else:
                 Rij_df.loc[row, column] = Rij_df.loc[column, row]
     # write Rij_df symmetrical to disk
-    rij_sym_dir=os.path.join(flag_values['output'], '03_correlation_calcs', 'Rij_df_symmetrical.csv')
+    rij_sym_dir=os.path.join(flag_values['output'], '02_correlation', 'Rij_df_symmetrical.csv')
     Rij_df.to_csv(rij_sym_dir)
     print("->Wrote 'Rij_df_symmetrical.csv' to '{}".format(rij_sym_dir + '\n'))
     
@@ -185,7 +185,7 @@ def pearson_corr_calc(flag_values, pa_df, gene_names, E_i, N, Cij_df):
     Rij_inverse_df = pd.DataFrame(np.linalg.pinv(Rij_df.values), Rij_df.columns, Rij_df.index)
 
     # write Rij_inverse_df to disk
-    Rij_inverse_dir=os.path.join(flag_values['output'],'03_correlation_calcs','Rij_inverse_df.csv')
+    Rij_inverse_dir=os.path.join(flag_values['output'],'02_correlation','Rij_inverse_df.csv')
     Rij_inverse_df.to_csv(Rij_inverse_dir)
     print("->Wrote 'Rij_inverse_df.csv' to '{}".format(Rij_inverse_dir + '\n'))
     
