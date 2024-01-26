@@ -1,34 +1,55 @@
 
+
 <h1 align="center">GeneCoOccurrence</h1>
 
 <p align="center">
   <img width="256" height="256" src="https://user-images.githubusercontent.com/35710809/167226809-ea5ec455-674c-4111-a1b0-acb84f29b3ee.png">
 </p>
 <p align="center"><b>
-A Tool for Exploring Relationships Within Small Sets of Unclassified Microbial Genes
+A Tool for Calculating Bacterial Gene Co-occurrence Without Phylogenetic Inference
 </p></b>
 
 
 ## Description
+**Jan 25th 2024:** A link to bioRxiv software announcement paper will be provided soon.
+This software was used in https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9830645/.
 
-GeneCoOccurrence provides an accessible tool for biologist to explore interactions and functional relationships between small sets of unclassified genes. It works by calculating the co-occurrence of homologues genes in individual strains from across the sequenced bacterial domain. **May 6th, 2022: Expect a biorxiv draft soon!**
-
-
+ GeneCoOccurrence enables investigation of the possible functional pairing of co-occurring bacterial genes on genetic elements that lack informative phylogeny. This uniquely allows investigation of horizontally acquired regions of DNA in genomic islands, mobile genetic elements, etc. The software works by calculating the frequency at which a pair of genes are jointly present within individual genomes across a given set of sequenced bacteria. 
+ **The output includes co-occurrence scores, heatmaps, and graphical networks to provide context to the co-occurrence of gene pairs.**
+ 
+ *See Tutorial with Sample Data below to see sample input and step-by-step examples.*
 ## Getting Started
 
 ### Installing
-For now, you must install dependencies (see below) and run via Python3 interpreter in a BASH shell (Linux/Unix/MacOS/WSL2). **May 6th, 2022: Docker image coming soon.**
+We recommend creating an isolated environment using Conda (https://www.anaconda.com/download), followed by installation using the Python package manager pip.
+1. Create Conda enviornment named 'gco' (i.e. GeneCoOccurrence) 
+```
+conda create --name gco python=3.11
+```
+2. Enter the 'gco' isolated enviornment
+```
+conda activate gco
+```
+
+3. Install GeneCoOccurrence using pip with our package at testpypi
+```
+python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ genecooccurrence
+```
 
 ### Basic Usage
 
-<pre>
-main.py -i blast_output.xml -o /home/name/my_project
-</pre>
-* `-i <Input File>`<br>
-  *Required*<br>
-  BLAST results of your genes of interest (saved as a single .xml file, which is an available output format for BLAST on NCBI website and stand-alone command line tool).
 
-* `-o <Output Directory>`<br>
+```
+gco -i blast_output.xml -o /home/name/my_project -c protein_id_to_common_names.csv
+```
+
+* `-i <Input File>` *required*
+
+  BLAST results of your genes of interest (saved as a single .xml file, which is an available output format for BLAST on NCBI website and stand-alone command line tool).
+  **OR**
+Any binary presence/absence matrix in comma-separated values (.csv) file. It should be utf-8 formatted, comma separated, and have a '.csv' suffix.
+* `-o <Output Directory>` *optional* 
+*If not provided defaults to current working directory
   *Optional: If not provided defaults to current working directory*<br>
   Desired output directory
 
@@ -55,14 +76,9 @@ main.py -i blast_output.xml -o /home/name/my_project <i>-c prot_ID_to_common_nam
 **Workflow of GeneCoOccurrence**. Output folders in grey, input file in blue, intermediate output files in red, final output files in green. **A.** User input is either a presence/absence matrix OR BLAST results. **B.** A presence/absence matrix is generated if BLAST results were chosen as input. **C.** The co-occurrence for all GOIs *i* to *j* is summed and fed into a Pearson Correlation followed by a partial correlation correction which results in co-occurrence score. **D.** Output includes a co-occurrence heatmap of all genes *i* to *j*, maximum related subnetwork visuals, and a co-occurrence table.
 
 ## Tutorial with Sample Data
-<!-- Any advise for common problems or issues.
-```
-command to run if program contains helper info
-``` -->
-
 
 ## Authors
-Copyright (C) 2018-2022  Clinton A. Elg
+Copyright (C) 2018-2024  Clinton A. Elg
 Please contact via Github
 
 ## Version History
