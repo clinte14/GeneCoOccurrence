@@ -73,7 +73,7 @@ gco -i blast_output.xml -o /home/name/my_project -c protein_id_to_common_names.c
 
 ### 1. Using BLAST Results
 1. First [install](#installation) GeneCoOccurrence as described above.
-2. Right-click this [link](https://github.com/clinte14/GeneCoOccurrence/blob/master/tutorial.zip) and choose 'Save As' to save a zipped directory containing the example data and output.
+2. Right-click this [link](https://github.com/clinte14/GeneCoOccurrence/raw/master/tutorial.zip) and choose 'Save As' to save a zipped directory containing the example data and output.
 3. Navigate to and unzip the previous directory, which should have this structure:
 ```
 └── tutorial
@@ -105,7 +105,7 @@ We offer the ability to convert less helpful BLAST query gene IDs (_e.g. BAF3344
 
 ### 2. Using a Custom Presence/Absence Matrix
 1. First [install](#installation) GeneCoOccurrence as described above.
-2. Right-click this [link](https://github.com/clinte14/GeneCoOccurrence/blob/master/tutorial.zip) and choose 'Save As' to save a zipped directory containing the example data and output.
+2. Right-click this [link](https://github.com/clinte14/GeneCoOccurrence/raw/master/tutorial.zip) and choose 'Save As' to save a zipped directory containing the example data and output.
 3. Navigate to and unzip the previous directory, which should have this structure:
 ```
 └── tutorial
