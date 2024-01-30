@@ -24,7 +24,7 @@ A Tool for Calculating Bacterial Gene Co-occurrence Without Phylogenetic Inferen
 ## Installation
  *GeneCoOccurrence is written in Python3 and compatible with Linux and Mac OS*.
  
-We recommend creating an isolated environment using [Conda](https://www.anaconda.com/download), followed by installation using the Python package manager pip.
+We recommend creating an isolated environment using [Conda](https://www.anaconda.com/download), followed by installation using the Python package manager [pip](https://pip.pypa.io/en/stable/).
 1. Create Conda enviornment named 'gco' (i.e. GeneCoOccurrence) 
 ```
 conda create --name gco python=3.11
@@ -48,13 +48,15 @@ gco -i blast_output.xml -o /home/name/my_project -c protein_id_to_common_names.c
 * `-i <Input File>` *required*
 
   BLAST results of your genes of interest (saved as a single .xml file, which is an available output format for BLAST on NCBI website and stand-alone command line tool).
+
   **OR**
-Any binary presence/absence matrix in comma-separated values (.csv) file. It should be utf-8 formatted, comma separated, and have a '.csv' suffix.
-* `-o <Output Directory>` *optional* 
+  
+  Any binary presence/absence matrix in comma-separated values (.csv) file. It should be utf-8 formatted, comma separated, and have a '.csv' suffix.
+* `-o <Output Directory>` *optional*
+  
   *Optional: If not provided defaults to current working directory*
-* `-c <Common Name>` *optional* 
-  *Optional:  A .csv file that allows conversion of BLAST query protein ID's to common gene names of your choosing.* 
-* `-c <Common Name>` *optional* 
+* `-c <Common Name>` *optional*
+  
   *Optional:  A .csv file that allows conversion of BLAST query protein ID's to common gene names of your choosing.* 
 
 ## Workflow
