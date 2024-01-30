@@ -18,7 +18,7 @@ A Tool for Calculating Bacterial Gene Co-occurrence Without Phylogenetic Inferen
 
  **An example of GeneCoOccurrence usage** is found in this [Nature Microbiology](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9830645) study of unique genomic islands in the current pandemic strain of *Vibrio cholerae* .
  
- **GeneCoOccurrence enables investigation of the possible functional pairing of co-occurring bacterial genes on genetic elements that lack informative phylogeny.** This uniquely allows investigation of horizontally acquired regions of DNA in genomic islands, mobile genetic elements, etc. The software works by calculating the frequency at which a pair of genes are jointly present within individual genomes across a given set of sequenced bacteria. The output includes co-occurrence scores, heatmaps, and graphical networks to provide context to the co-occurrence of gene pairs.
+ **GeneCoOccurrence enables investigation of the possible functional pairing of co-occurring bacterial genes on genetic elements that lack informative phylogeny.** This uniquely allows investigation of horizontally acquired regions of DNA in genomic islands, mobile genetic elements, etc. The software works by calculating the frequency at which a pair of genes are jointly present within individual genomes across a given set of sequenced bacteria. The output includes co-occurrence scores, heatmaps, and graphical networks to provide context to the co-occurrence of gene pairs.**GeneCoOccurrence is written in Python3 and compatible with Linux and Mac OS**.
 
  *See [Tutorial With Sample Data](#tutorial-with-sample-data) below to see sample input and step-by-step examples.*
 ## Installation
