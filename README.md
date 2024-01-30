@@ -90,10 +90,12 @@ gco -i ./VSPI_genes_BLAST_results.xml -o ./VSPI -c ./protein_id_to_common_names.
 6. Note this command will overwrite the existing output directory *VSPI*. See [workflow](#workflow) above to see the output files available in directory *VSPI*.
 
 **Helpful Information for Generating Your Own Compatible BLAST Data**
+
 It is important that BLAST matches have enough sequence similarity to the GOI to reasonably infer homology. For this reason, the BLAST program (*e.g.,* BLASTp or BLASTn) and E-value cutoff value should be carefully chosen given the context of your organism(s) and possible MGEs of interest. Our study into functionally related gene pairs in [*Vibrio cholerae*](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9830645/) used BLASTp with an E-value cutoff of 10^-4 in the NCBI protein non-redundant (nr) database limited to taxid:2 (bacteria). Additionally, we note that the online BLAST tool provided by NCBI limits the total number of total hits returned. This means that hits meeting the search criteria could be arbitrarily dropped, reducing the input available to GeneCoOccurrence to make predictions. In these cases, users should consider using [localized BLAST](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html) searches.  **The BLAST search should have an output format of ‘5’ (single-file .xml).**
 
 
 **Helpful Information for Creating a Common Name .csv**
+
 We offer the ability to convert less helpful BLAST query gene IDs (_e.g. BAF33440_) to common gene names (_e.g. KfrC_). These common gene names are subsequently used in intermediate and final output files (including visualizations). To enable this feature, use the ‘-c’ flag (_e.g._ -c _gene_name_conversions.csv_) pointing to a comma-separated .csv file. This file should be formatted with query gene IDs in the first column and corresponding common gene names on an equivalent row in the second column.
 
 
