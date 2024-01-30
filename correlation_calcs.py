@@ -4,11 +4,10 @@ import math as math
 import csv
 import graphviz
 import os
+import shutil
 
 
 def correlation_calcs(flag_values):
-    '''
-    '''
     # Open prescence/abscence matrix from /01_PA_matrix/ directory 
     with open(os.path.join(flag_values['output'],'01_PA_matrix','pa_matrix.csv'), 'r') as infile:
             # Create dataframe from BLAST results, header = row# w/ column names
@@ -50,9 +49,9 @@ def correlation_calcs(flag_values):
             Pjj = Rij_inverse_df.loc[column_to_right_name, column_to_right_name]
             #print("Pij=", Pij, "Pii=", Pii, "Pjj=", Pjj)
             Wij_df.at[column_name, column_to_right_name] = -((Pij) / (math.sqrt(Pii * Pjj)))
-    Wij_df.to_csv(os.path.join(flag_values['output'],'02_correlation','Wij_df_triangle.csv'))
-    print("->Wrote 'Wij_df_triangle.csv' to '{}".format(os.path.join(flag_values['output']),"04_correlog_values..") + '\n') 
 
+    Wij_df.to_csv(os.path.join(flag_values['output'],'02_correlation','Wij_df_triangle.csv'))
+    print("->Wrote 'Wij_df_triangle.csv' to '{}".format(os.path.join(flag_values['output']),"02_correlation..") + '\n') 
            
     # Convert Wij_df from a triangle matrix into a symmetrical matrix
     for column in gene_names:
@@ -63,8 +62,8 @@ def correlation_calcs(flag_values):
             # Transpose rows/columns with columns/rows to fill in bottom triangles
             else:
                 Wij_df.loc[row, column] = Wij_df.loc[column, row]
-
     Wij_df.to_csv(os.path.join(flag_values['output'],'02_correlation','Wij_df.csv'))
+    print("->Wrote 'Wij_df.csv' to '{}".format(os.path.join(flag_values['output']),"02_correlation..") + '\n') 
 
     #need print statement here to console
     return Wij_df
@@ -100,6 +99,8 @@ def calc_mrs(Wij_df, flag_values):
         temp_list.append(current_row[1])
         network_list.append(temp_list)
     f.close()
+        #make copy in 03_visual_ouput folder
+    shutil.copy(os.path.join(flag_values['output'],'02_correlation',"Wij_matrix.csv"),os.path.join(flag_values['output'],'03_visual_output',"co-occurrence.csv"))
     return network_list
 
 ########################################################################################################################

@@ -10,16 +10,15 @@ import sys
 import os
 import shutil
 import pandas as pd
-from GeneCoOccurrence.housekeeping import create_folders, parse_flags, save_flags, convert_protID_to_common_names
-from GeneCoOccurrence.blast_parse import parse_merge_BLAST, create_pa, clean_BLAST_xml
-from GeneCoOccurrence.correlation_calcs import correlation_calcs, calc_mrs
-from GeneCoOccurrence.create_visuals import create_heatmap, create_network_map
+from housekeeping import create_folders, parse_flags, save_flags, convert_protID_to_common_names
+from blast_parse import parse_merge_BLAST, create_pa, clean_BLAST_xml
+from correlation_calcs import correlation_calcs, calc_mrs
+from create_visuals import create_heatmap, create_network_map
 
 def main():
     
     # Obtain flag values by parsing keyboard input at BASH command
     flag_values = parse_flags()
-
     # Create folders for project in path defined by -o flag. Default is current directory.
     create_folders(flag_values['output'])
     # Save/record flags options and parameters to "command.txt" file in 00_settings folder
