@@ -42,7 +42,7 @@ python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-u
 ## Basic Usage
 
 ```
-gco -i blast_output.xml -o /home/name/my_project -c protein_id_to_common_names.csv
+gco -i ./VSPI_genes_BLAST_results.xml -o ./VSPI -c ./prot_ID_to_common_name.csv
 ```
 
 * `-i <Input File>` *required*
