@@ -22,7 +22,8 @@ A Tool for Calculating Bacterial Gene Co-occurrence Without Phylogenetic Inferen
 
  *See [Tutorial With Sample Data](#tutorial-with-sample-data) below to see sample input and step-by-step examples.*
 ## Installation
- **GeneCoOccurrence is written in Python3 and compatible with Linux and Mac OS**.
+ *GeneCoOccurrence is written in Python3 and compatible with Linux and Mac OS*.
+ 
 We recommend creating an isolated environment using [Conda](https://www.anaconda.com/download), followed by installation using the Python package manager pip.
 1. Create Conda enviornment named 'gco' (i.e. GeneCoOccurrence) 
 ```
