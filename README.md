@@ -72,7 +72,7 @@ gco -i ./VSPI_genes_BLAST_results.xml -o ./VSPI -c ./prot_ID_to_common_name.csv
 *You may wish to use a custom presence/absence matrix, for example to calculate the co-occurrence of antibiotic resistance genes within metagenomic data, etc.*
 
 ### 1. Using BLAST Results
-1. First [install](#installation) GeneCoOccurrence as described above.
+1. First [install](#installation) GeneCoOccurrence as described above. Ensure the *gco* environment is activated as in step 2 of the installation.
 2. Right-click this [link](https://github.com/clinte14/GeneCoOccurrence/raw/master/tutorial.zip) and choose 'Save As' to save a zipped directory containing the example data and output.
 3. Navigate to and unzip the previous directory, which should have this structure:
 ```
@@ -104,7 +104,7 @@ We offer the ability to convert less helpful BLAST query gene IDs (_e.g. BAF3344
 
 
 ### 2. Using a Custom Presence/Absence Matrix
-1. First [install](#installation) GeneCoOccurrence as described above.
+1. First [install](#installation) GeneCoOccurrence as described above. Ensure the *gco* environment is activated as in step 2 of the installation.
 2. Right-click this [link](https://github.com/clinte14/GeneCoOccurrence/raw/master/tutorial.zip) and choose 'Save As' to save a zipped directory containing the example data and output.
 3. Navigate to and unzip the previous directory, which should have this structure:
 ```
