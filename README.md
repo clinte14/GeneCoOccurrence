@@ -61,10 +61,10 @@ Any binary presence/absence matrix in comma-separated values (.csv) file. It sho
 
 ## Tutorial with Sample Data
 
-[1. Using BLAST Results](#using-blast-results)
+[1. Using BLAST Results](#1-using-blast-results)
 *You may wish to use BLAST results of genes of interest to calculate gene pair co-occurrence, most likely to infer functional relatedness.*
 
-[2. Using A Custom Presence/Absence Matrix](#using-a-custom-presenceabsence-matrix)
+[2. Using A Custom Presence/Absence Matrix](#2-using-a-custom-presenceabsence-matrix)
 *You may wish to use a custom presence/absence matrix, for example to calculate the co-occurrence of antibiotic resistance genes within metagenomic data, etc.*
 
 ### 1. Using BLAST Results
